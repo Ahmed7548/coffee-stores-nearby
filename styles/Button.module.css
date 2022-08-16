@@ -1,0 +1,25 @@
+.button{
+  padding: 1rem;
+  width: fit-content;
+  margin: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color:var(--text-purple-dark);
+  color:var(--text-light) ;
+  transition: transform 0.1s ease-in, filter 0.1s ease-in ;
+  border-radius: 2px;
+}
+
+.button:hover{
+  transform: scale(1.02);
+  filter: brightness(1.2);
+}
+
+
+
+@media (min-width:640px) {
+  .button {
+    margin: 0;
+  }
+}

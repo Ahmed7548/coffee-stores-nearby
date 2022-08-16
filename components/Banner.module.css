@@ -1,0 +1,79 @@
+.banner {
+	text-align: left;
+	padding: 5vw;
+	/* margin: auto; */
+  text-align: center;
+	width: 100%;
+	background-size: contain;
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
+.title {
+	color: var(--text-purple);
+	margin: 0;
+	line-height: 1.5;
+	font-size: 2rem;
+}
+
+.space {
+  letter-spacing: 7px;
+}
+
+.description {
+	margin: 1rem 0;
+	font-size: 1.5rem;
+	color: var(--text-light);
+}
+
+@media (min-width: 640px) {
+	.banner {
+		/* height: 500px; */
+    text-align: start;
+		background-size: 30vw;
+		background-position: 50vw;
+		background-image: url("../public//static/undraw_coffee_with_friends_3cbj\ \(1\).svg");
+	}
+	.title {
+		font-size: 2.5rem;
+	}
+	.description {
+		font-size: 1.25rem;
+	}
+}
+
+@media (min-width: 768px) {
+	.title {
+		font-size: 3rem;
+	}
+	.description {
+		font-size: 1.5 rem;
+	}
+}
+
+@media (min-width: 1024px) {
+	.title {
+		font-size: 4rem;
+	}
+	.description {
+		font-size: 2rem;
+	}
+}
+@media (min-width: 1280px) {
+	.title {
+		font-size: 5rem;
+	}
+	.description {
+		font-size: 2.5rem;
+	}
+}
+
+/* 
+BreakPoints:
+
+sm: min-width :640 
+md: min-width :768 
+lg: min-width :1024px
+xl: min-width :1280px
+2xl: min-width :1536px
+*/

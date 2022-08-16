@@ -1,0 +1,13 @@
+.layout{
+  width: 100%;
+  height: fit-content;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  background-image: url(../public/static/mesh-gradient\ .png);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}

@@ -1,0 +1,10 @@
+.footer {
+  min-height: fit-content;
+  color: white;
+  height: 30vh;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.099);
+  box-shadow:
+  0px -15px 17px -6px rgba(0, 0, 0, 0.05)
+;
+}
