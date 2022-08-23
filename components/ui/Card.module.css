@@ -1,0 +1,21 @@
+
+.cart {
+  height: fit-content;
+  width: 200px;
+  padding: 1rem;
+  position: relative;
+  /* border: 1px solid grey ; */
+  transition:transform 0.2s linear;
+  color:var(--text-purple-dark)
+}
+
+.cart:hover{
+  transform: scale(1.03);
+  background: rgba( 255, 255, 255, 0.8 );
+}
+
+
+.cart h4{
+ padding-bottom: 1rem;
+ padding-top: 0.5rem;
+}

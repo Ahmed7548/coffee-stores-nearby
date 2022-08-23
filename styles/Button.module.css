@@ -1,7 +1,7 @@
 .button{
   padding: 1rem;
   width: fit-content;
-  margin: auto;
+  margin: 0 auto;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -9,11 +9,17 @@
   color:var(--text-light) ;
   transition: transform 0.1s ease-in, filter 0.1s ease-in ;
   border-radius: 2px;
+  position: relative;
 }
 
 .button:hover{
   transform: scale(1.02);
   filter: brightness(1.2);
+}
+
+.button:focus {
+  outline: 1px dotted;
+  outline: 5px auto -webkit-focus-ring-color;
 }
 
 

@@ -2,7 +2,7 @@ html,
 body {
 	padding: 0;
 	margin: 0;
-	font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+	font-family: 'Aboreto', cursive, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
 		Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
 }
 
@@ -12,14 +12,13 @@ body {
 	--tertiary-color: #000;
 	--primary-button-color: 28, 45, 151;
 	--text-purple: rgb(112, 73, 197);
-	--text-purple-dark: rgb(83, 58, 112);
+	--text-purple-dark: rgb(135, 34, 34);
 	--text-black: rgb(10, 16, 30);
-	--text-light: rgb(242, 244, 247);
-	/* --media-sm:640px;
-	--media-md:768px;
-	--media-lg:1024px;
-	--media-xlg:1280px;
-	--media-xxlg:1536px; */
+	--text-light: rgb(219, 226, 255);
+	--base-unit:0.25rem;
+
+
+	--grid-column-width:350px;
 }
 
 a {
@@ -31,12 +30,64 @@ a {
 	box-sizing: border-box;
 }
 
+p {
+  font-weight: 500;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+hr,
+p,
+pre {
+  margin: 0;
+}
+
+button,.button {
+  background-color: transparent;
+  background-image: none;
+  font-weight: 600;
+}
+
+button:focus {
+  outline: 1px dotted;
+  outline: 5px auto -webkit-focus-ring-color;
+}
+
+
+.grid{
+	width: 100%;
+	display: grid;
+	grid-template-columns: repeat(auto-fit,var(--grid-column-width));
+	justify-items: center;
+	justify-content: center;
+	gap: 2rem  ;
+}
+
+.grid > *{
+	width:var(--grid-column-width)!important
+}
+
+.glass{
+	background: rgba( 255, 255, 255, 0.25 );
+  box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
+  backdrop-filter: blur( 5.5px );
+  -webkit-backdrop-filter: blur( 5.5px );
+  border-radius: 10px;
+  border: 1px solid rgba( 255, 255, 255, 0.18 );
+}
+
 .preventDefault{
 
 }
 .text-white{
   color: var(--text-light);
 }
+
+
 
 @media (prefers-color-scheme: dark) {
 	html {

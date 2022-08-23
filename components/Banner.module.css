@@ -1,29 +1,43 @@
+
 .banner {
 	text-align: left;
-	padding: 5vw;
-	/* margin: auto; */
+	position: relative;
+	z-index: 100;
+	padding: 1rem 5vw;
   text-align: center;
 	width: 100%;
+	min-height: 50vh;
 	background-size: contain;
 	background-repeat: no-repeat;
-	background-position: center;
+	background-position: top;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
 }
 
+
 .title {
-	color: var(--text-purple);
+	color: var(--text-purple-dark);
 	margin: 0;
 	line-height: 1.5;
-	font-size: 2rem;
+	font-size: calc(var(--base-unit)*12);
+	font-weight: 700;
+	position: relative;
 }
 
 .space {
   letter-spacing: 7px;
+	position: relative;
+	z-index: 100;
 }
 
 .description {
 	margin: 1rem 0;
-	font-size: 1.5rem;
+	font-size: calc(var(--base-unit)*6);
 	color: var(--text-light);
+	font-weight: 500;
+	/* position: relative; */
 }
 
 @media (min-width: 640px) {
@@ -32,39 +46,43 @@
     text-align: start;
 		background-size: 30vw;
 		background-position: 50vw;
-		background-image: url("../public//static/undraw_coffee_with_friends_3cbj\ \(1\).svg");
+		display: block;
+	}
+
+	.banner.banner::before{
+	background-color: transparent;
 	}
 	.title {
-		font-size: 2.5rem;
+		font-size: calc(var(--base-unit)*14);
 	}
 	.description {
-		font-size: 1.25rem;
+		font-size:calc(var(--base-unit)*7);
 	}
 }
 
 @media (min-width: 768px) {
 	.title {
-		font-size: 3rem;
+		font-size: calc(var(--base-unit)*16);
 	}
 	.description {
-		font-size: 1.5 rem;
+		font-size: calc(var(--base-unit)*8);
 	}
 }
 
 @media (min-width: 1024px) {
 	.title {
-		font-size: 4rem;
+		font-size: calc(var(--base-unit)*18);
 	}
 	.description {
-		font-size: 2rem;
+		font-size: calc(var(--base-unit)*9);
 	}
 }
 @media (min-width: 1280px) {
 	.title {
-		font-size: 5rem;
+		font-size: calc(var(--base-unit)*20);
 	}
 	.description {
-		font-size: 2.5rem;
+		font-size:calc(var(--base-unit)*10);
 	}
 }
 

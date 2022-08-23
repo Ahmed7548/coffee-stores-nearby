@@ -12,7 +12,7 @@ const Button: React.FC<Props> = ({ as, children }) => {
 	let Element: (React.ElementType<any> | "a" | "button") | undefined = as;
 	if (Element === undefined) Element = "button";
 	return (
-		<Link href="#" className={styles.button}>
+		<Link href="#" className={`${styles.button} .button`}>
 			<a  className={styles.button}>{children}</a>
 		</Link>
 	);

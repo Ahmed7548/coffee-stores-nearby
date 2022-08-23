@@ -15,7 +15,7 @@ const Banner: React.FC<Props> = ({ className, buttonText }) => {
 				<span className="text-white">Coffee</span>{" "}
 				<span className={styles.space}>Chase</span>.....
 			</h1>
-			<p className={styles.description}>Discover your local cofee shop!</p>
+			<p className={styles.description}>Discover your local cofee shops!</p>
 			<Button as={Link}>{buttonText}</Button>
 		</div>
 	);
