@@ -52,12 +52,14 @@ button,
 .button {
 	background-color: transparent;
 	background-image: none;
+	border: none;
+	outline: none;
+	font-family: inherit;
 	font-weight: 600;
 }
 
 button:focus {
-	outline: 1px dotted;
-	outline: 5px auto -webkit-focus-ring-color;
+	outline: none;
 }
 
 
@@ -86,6 +88,12 @@ button:focus {
 	-webkit-backdrop-filter: blur(5.5px);
 	border-radius: 10px;
 	border: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+.glass:hover{
+  transform: scale(1.03);
+  background: rgba(255, 254, 254, 0.576);
+	color: var(--text-purple-dark);
 }
 
 .center-container {
