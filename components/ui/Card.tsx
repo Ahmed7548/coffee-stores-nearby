@@ -12,8 +12,8 @@ interface Props{
 
 const Card = ({imgWidth,href,title,id}:Props) => {
 	return (
-		<Link href={`/coffee-store/${id}`}>
-			<a className={`${styles.cart} glass`}>
+		
+			<div className={`${styles.cart} glass`}>
 				<h4>{ title}</h4>
 				<Image
 					alt=""
@@ -21,8 +21,7 @@ const Card = ({imgWidth,href,title,id}:Props) => {
 					width={imgWidth ? imgWidth : 300}
 					height={(imgWidth ? imgWidth : 300) - 20}
 				/>
-			</a>
-		</Link>
+			</div>
 	);
 };
 

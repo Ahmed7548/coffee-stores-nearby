@@ -1,24 +1,29 @@
 import type { GetStaticProps, NextPage } from "next";
-import { useEffect,useState } from "react";
+import Link from "next/link";
+import { useEffect, useState } from "react";
 import Head from "next/head";
 import Image from "next/image";
 import Banner from "../components/Banner";
 import Card from "../components/ui/Card";
 import styles from "../styles/Home.module.css";
 
-interface Props{
-  shops:{}[]
+interface Store {
+	id: number;
+	name: string;
+	imgUrl: string;
 }
 
-const Home: NextPage<Props> = ({shops}) => {
+interface Props {
+	stores: Store[];
+}
 
+const Home: NextPage<Props> = ({ stores }) => {
 	const [imgWidth, setImageWidth] = useState<number>();
 
 	useEffect(() => {
-    const style = getComputedStyle(document.body);
-    setImageWidth(parseInt(style.getPropertyValue("--grid-column-width")))
+		const style = getComputedStyle(document.body);
+		setImageWidth(parseInt(style.getPropertyValue("--grid-column-width")));
 	}, []);
-
 
 	return (
 		<div className={styles.container}>
@@ -36,96 +41,40 @@ const Home: NextPage<Props> = ({shops}) => {
 							height={500}
 						/>
 					</div>
-        </header>
-        <div className="grid">
-          <Card title="my favorite coffe store" href="/static/ruben-ramirez-xhKG01FN2uk-unsplash.jpg" imgWidth={imgWidth} id={"1"} />
-          <Card title="my favorite coffe store" href="/static/ruben-ramirez-xhKG01FN2uk-unsplash.jpg" imgWidth={imgWidth} id={"1"} />
-          <Card title="my favorite coffe store" href="/static/ruben-ramirez-xhKG01FN2uk-unsplash.jpg" imgWidth={imgWidth} id={"1"} />
-          <Card title="my favorite coffe store" href="/static/ruben-ramirez-xhKG01FN2uk-unsplash.jpg" imgWidth={imgWidth} id={"1"} />
-          <Card title="my favorite coffe store" href="/static/ruben-ramirez-xhKG01FN2uk-unsplash.jpg" imgWidth={imgWidth} id={"1"} />
-          <Card title="my favorite coffe store" href="/static/ruben-ramirez-xhKG01FN2uk-unsplash.jpg" imgWidth={imgWidth} id={"1"} />
-          <Card title="my favorite coffe store" href="/static/ruben-ramirez-xhKG01FN2uk-unsplash.jpg" imgWidth={imgWidth} id={"1"} />
-          <Card title="my favorite coffe store" href="/static/ruben-ramirez-xhKG01FN2uk-unsplash.jpg" imgWidth={imgWidth} id={"1"} />
-          <Card title="my favorite coffe store" href="/static/ruben-ramirez-xhKG01FN2uk-unsplash.jpg" imgWidth={imgWidth} id={"1"} />
-          <Card title="my favorite coffe store" href="/static/ruben-ramirez-xhKG01FN2uk-unsplash.jpg" imgWidth={imgWidth} id={"1"} />
-          <Card title="my favorite coffe store" href="/static/ruben-ramirez-xhKG01FN2uk-unsplash.jpg" imgWidth={imgWidth} id={"1"} />
-          <Card title="my favorite coffe store" href="/static/ruben-ramirez-xhKG01FN2uk-unsplash.jpg" imgWidth={imgWidth} id={"1"} />
-          <Card title="my favorite coffe store" href="/static/ruben-ramirez-xhKG01FN2uk-unsplash.jpg" imgWidth={imgWidth} id={"1"} />
-          <Card title="my favorite coffe store" href="/static/ruben-ramirez-xhKG01FN2uk-unsplash.jpg" imgWidth={imgWidth} id={"1"} />
-          <Card title="my favorite coffe store" href="/static/ruben-ramirez-xhKG01FN2uk-unsplash.jpg" imgWidth={imgWidth} id={"1"} />
-          <Card title="my favorite coffe store" href="/static/ruben-ramirez-xhKG01FN2uk-unsplash.jpg" imgWidth={imgWidth} id={"1"} />
-          <Card title="my favorite coffe store" href="/static/ruben-ramirez-xhKG01FN2uk-unsplash.jpg" imgWidth={imgWidth} id={"1"} />
-          <Card title="my favorite coffe store" href="/static/ruben-ramirez-xhKG01FN2uk-unsplash.jpg" imgWidth={imgWidth} id={"1"} />
-          <Card title="my favorite coffe store" href="/static/ruben-ramirez-xhKG01FN2uk-unsplash.jpg" imgWidth={imgWidth} id={"1"} />
-          <Card title="my favorite coffe store" href="/static/ruben-ramirez-xhKG01FN2uk-unsplash.jpg" imgWidth={imgWidth} id={"1"} />
-          <Card title="my favorite coffe store" href="/static/ruben-ramirez-xhKG01FN2uk-unsplash.jpg" imgWidth={imgWidth} id={"1"} />
-          <Card title="my favorite coffe store" href="/static/ruben-ramirez-xhKG01FN2uk-unsplash.jpg" imgWidth={imgWidth} id={"1"} />
-          <Card title="my favorite coffe store" href="/static/ruben-ramirez-xhKG01FN2uk-unsplash.jpg" imgWidth={imgWidth} id={"1"} />
-          <Card title="my favorite coffe store" href="/static/ruben-ramirez-xhKG01FN2uk-unsplash.jpg" imgWidth={imgWidth} id={"1"} />
-          <Card title="my favorite coffe store" href="/static/ruben-ramirez-xhKG01FN2uk-unsplash.jpg" imgWidth={imgWidth} id={"1"} />
-          <Card title="my favorite coffe store" href="/static/ruben-ramirez-xhKG01FN2uk-unsplash.jpg" imgWidth={imgWidth} id={"1"} />
-          <Card title="my favorite coffe store" href="/static/ruben-ramirez-xhKG01FN2uk-unsplash.jpg" imgWidth={imgWidth} id={"1"} />
-          <Card title="my favorite coffe store" href="/static/ruben-ramirez-xhKG01FN2uk-unsplash.jpg" imgWidth={imgWidth} id={"1"} />
-          <Card title="my favorite coffe store" href="/static/ruben-ramirez-xhKG01FN2uk-unsplash.jpg" imgWidth={imgWidth} id={"1"} />
-          <Card title="my favorite coffe store" href="/static/ruben-ramirez-xhKG01FN2uk-unsplash.jpg" imgWidth={imgWidth} id={"1"} />
-          <Card title="my favorite coffe store" href="/static/ruben-ramirez-xhKG01FN2uk-unsplash.jpg" imgWidth={imgWidth} id={"1"} />
-          <Card title="my favorite coffe store" href="/static/ruben-ramirez-xhKG01FN2uk-unsplash.jpg" imgWidth={imgWidth} id={"1"} />
-          <Card title="my favorite coffe store" href="/static/ruben-ramirez-xhKG01FN2uk-unsplash.jpg" imgWidth={imgWidth} id={"1"} />
-          <Card title="my favorite coffe store" href="/static/ruben-ramirez-xhKG01FN2uk-unsplash.jpg" imgWidth={imgWidth} id={"1"} />
-          <Card title="my favorite coffe store" href="/static/ruben-ramirez-xhKG01FN2uk-unsplash.jpg" imgWidth={imgWidth} id={"1"} />
-          <Card title="my favorite coffe store" href="/static/ruben-ramirez-xhKG01FN2uk-unsplash.jpg" imgWidth={imgWidth} id={"1"} />
-          <Card title="my favorite coffe store" href="/static/ruben-ramirez-xhKG01FN2uk-unsplash.jpg" imgWidth={imgWidth} id={"1"} />
-          <Card title="my favorite coffe store" href="/static/ruben-ramirez-xhKG01FN2uk-unsplash.jpg" imgWidth={imgWidth} id={"1"} />
-          <Card title="my favorite coffe store" href="/static/ruben-ramirez-xhKG01FN2uk-unsplash.jpg" imgWidth={imgWidth} id={"1"} />
-          <Card title="my favorite coffe store" href="/static/ruben-ramirez-xhKG01FN2uk-unsplash.jpg" imgWidth={imgWidth} id={"1"} />
-          <Card title="my favorite coffe store" href="/static/ruben-ramirez-xhKG01FN2uk-unsplash.jpg" imgWidth={imgWidth} id={"1"} />
-          <Card title="my favorite coffe store" href="/static/ruben-ramirez-xhKG01FN2uk-unsplash.jpg" imgWidth={imgWidth} id={"1"} />
-          <Card title="my favorite coffe store" href="/static/ruben-ramirez-xhKG01FN2uk-unsplash.jpg" imgWidth={imgWidth} id={"1"} />
-          <Card title="my favorite coffe store" href="/static/ruben-ramirez-xhKG01FN2uk-unsplash.jpg" imgWidth={imgWidth} id={"1"} />
-          <Card title="my favorite coffe store" href="/static/ruben-ramirez-xhKG01FN2uk-unsplash.jpg" imgWidth={imgWidth} id={"1"} />
-          <Card title="my favorite coffe store" href="/static/ruben-ramirez-xhKG01FN2uk-unsplash.jpg" imgWidth={imgWidth} id={"1"} />
-          <Card title="my favorite coffe store" href="/static/ruben-ramirez-xhKG01FN2uk-unsplash.jpg" imgWidth={imgWidth} id={"1"} />
-          <Card title="my favorite coffe store" href="/static/ruben-ramirez-xhKG01FN2uk-unsplash.jpg" imgWidth={imgWidth} id={"1"} />
-          <Card title="my favorite coffe store" href="/static/ruben-ramirez-xhKG01FN2uk-unsplash.jpg" imgWidth={imgWidth} id={"1"} />
-          <Card title="my favorite coffe store" href="/static/ruben-ramirez-xhKG01FN2uk-unsplash.jpg" imgWidth={imgWidth} id={"1"} />
-          <Card title="my favorite coffe store" href="/static/ruben-ramirez-xhKG01FN2uk-unsplash.jpg" imgWidth={imgWidth} id={"1"} />
-          <Card title="my favorite coffe store" href="/static/ruben-ramirez-xhKG01FN2uk-unsplash.jpg" imgWidth={imgWidth} id={"1"} />
-          <Card title="my favorite coffe store" href="/static/ruben-ramirez-xhKG01FN2uk-unsplash.jpg" imgWidth={imgWidth} id={"1"} />
-          <Card title="my favorite coffe store" href="/static/ruben-ramirez-xhKG01FN2uk-unsplash.jpg" imgWidth={imgWidth} id={"1"} />
-          <Card title="my favorite coffe store" href="/static/ruben-ramirez-xhKG01FN2uk-unsplash.jpg" imgWidth={imgWidth} id={"1"} />
-          <Card title="my favorite coffe store" href="/static/ruben-ramirez-xhKG01FN2uk-unsplash.jpg" imgWidth={imgWidth} id={"1"} />
-          <Card title="my favorite coffe store" href="/static/ruben-ramirez-xhKG01FN2uk-unsplash.jpg" imgWidth={imgWidth} id={"1"} />
-          <Card title="my favorite coffe store" href="/static/ruben-ramirez-xhKG01FN2uk-unsplash.jpg" imgWidth={imgWidth} id={"1"} />
-          <Card title="my favorite coffe store" href="/static/ruben-ramirez-xhKG01FN2uk-unsplash.jpg" imgWidth={imgWidth} id={"1"} />
-          <Card title="my favorite coffe store" href="/static/ruben-ramirez-xhKG01FN2uk-unsplash.jpg" imgWidth={imgWidth} id={"1"} />
-          <Card title="my favorite coffe store" href="/static/ruben-ramirez-xhKG01FN2uk-unsplash.jpg" imgWidth={imgWidth} id={"1"} />
-          <Card title="my favorite coffe store" href="/static/ruben-ramirez-xhKG01FN2uk-unsplash.jpg" imgWidth={imgWidth} id={"1"} />
-          <Card title="my favorite coffe store" href="/static/ruben-ramirez-xhKG01FN2uk-unsplash.jpg" imgWidth={imgWidth} id={"1"} />
-          <Card title="my favorite coffe store" href="/static/ruben-ramirez-xhKG01FN2uk-unsplash.jpg" imgWidth={imgWidth} id={"1"} />
-          <Card title="my favorite coffe store" href="/static/ruben-ramirez-xhKG01FN2uk-unsplash.jpg" imgWidth={imgWidth} id={"1"} />
-          <Card title="my favorite coffe store" href="/static/ruben-ramirez-xhKG01FN2uk-unsplash.jpg" imgWidth={imgWidth} id={"1"} />
-          <Card title="my favorite coffe store" href="/static/ruben-ramirez-xhKG01FN2uk-unsplash.jpg" imgWidth={imgWidth} id={"1"} />
-          <Card title="my favorite coffe store" href="/static/ruben-ramirez-xhKG01FN2uk-unsplash.jpg" imgWidth={imgWidth} id={"1"} />
-          <Card title="my favorite coffe store" href="/static/ruben-ramirez-xhKG01FN2uk-unsplash.jpg" imgWidth={imgWidth} id={"1"} />
-          <Card title="my favorite coffe store" href="/static/ruben-ramirez-xhKG01FN2uk-unsplash.jpg" imgWidth={imgWidth} id={"1"} />
-          <Card title="my favorite coffe store" href="/static/ruben-ramirez-xhKG01FN2uk-unsplash.jpg" imgWidth={imgWidth} id={"1"} />
-          <Card title="my favorite coffe store" href="/static/ruben-ramirez-xhKG01FN2uk-unsplash.jpg" imgWidth={imgWidth} id={"1"} />
-          <Card title="my favorite coffe store" href="/static/ruben-ramirez-xhKG01FN2uk-unsplash.jpg" imgWidth={imgWidth} id={"1"} />
-          <Card title="my favorite coffe store" href="/static/ruben-ramirez-xhKG01FN2uk-unsplash.jpg" imgWidth={imgWidth} id={"1"} />
-        </div>
+				</header>
+				<h2 className={styles["grid-header"]}>
+					toronto stores
+				</h2>
+				<div className="grid">
+					{stores.map((store) => (
+						<Link key={store.id} href={`/coffee-store/${store.id}`}>
+							<a>
+								<Card
+									key={store.id}
+									title={store.name}
+									href={store.imgUrl}
+									imgWidth={imgWidth}
+									id={`${store.id}`}
+								/>
+							</a>
+						</Link>
+					))}
+				</div>
 			</main>
 		</div>
 	);
 };
 
+export const getStaticProps: GetStaticProps = async () => {
+	const response = await fetch("http://localhost:5000/stores");
 
-export const getStaticProps:GetStaticProps = () => {
-  return {
-    props: {
-      shops:[]
-    }
-  }
-}
+	const stores = await response.json();
 
+	return {
+		props: {
+			stores: stores,
+		},
+	};
+};
 
 export default Home;

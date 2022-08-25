@@ -1,0 +1,53 @@
+.container{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  height: fit-content;
+  padding: 0;
+  width: 100%;
+}
+
+
+
+.right{
+  padding: 1rem;
+  width: 400px;
+  margin-top: 1rem;
+}
+
+.right a {
+ margin-top: 1rem;
+}
+
+.left h2{
+  padding-bottom: 1rem;
+}
+@media (min-width: 640px) {
+  .container{
+    padding: 1rem;
+  }
+}
+/* 
+
+@media (min-width: 640px) {
+
+}
+
+@media (min-width: 768px) {
+
+} */
+
+@media (min-width: 1024px) {
+  .container{
+    width: 1024px;
+  }
+  .left{
+    margin-right: 1rem;
+  }
+  
+  .right{
+    margin-left: 1rem;
+    
+  }
+}
