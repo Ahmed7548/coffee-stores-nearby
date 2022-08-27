@@ -19,10 +19,10 @@
   margin-top: 1rem;
 }
 
-.address{
+/* .address{
   display: flex;
   justify-content: space-between;
-}
+} */
 
 .address address > span{
   margin-right: 0.5rem;

@@ -6,6 +6,8 @@ import Image from "next/image";
 import Banner from "../components/Banner";
 import Card from "../components/ui/Card";
 import styles from "../styles/Home.module.css";
+import { StoreFromApi } from "../index";
+import { fetchCoffeeStores } from "../lib/coffee-store";
 
 interface Store {
 	id: number;
@@ -42,9 +44,7 @@ const Home: NextPage<Props> = ({ stores }) => {
 						/>
 					</div>
 				</header>
-				<h2 className={styles["grid-header"]}>
-					toronto stores
-				</h2>
+				<h2 className={styles["grid-header"]}>toronto stores</h2>
 				<div className="grid">
 					{stores.map((store) => (
 						<Link key={store.id} href={`/coffee-store/${store.id}`}>
@@ -66,14 +66,22 @@ const Home: NextPage<Props> = ({ stores }) => {
 };
 
 export const getStaticProps: GetStaticProps = async () => {
-	const response = await fetch("http://localhost:5000/stores");
+	const data = await fetchCoffeeStores({
+		baseUrl: "https://api.foursquare.com/v3/places/search",
+		query: "coffee shop",
+		fields: "fsq_id,categories,location,name",
+		limit: 10,
+		near: "cairo",
+	});
 
-	const stores = await response.json();
+	if (data.notFound) {
+		return {
+			notFound: true,
+		};
+	}
 
 	return {
-		props: {
-			stores: stores,
-		},
+		props: { ...data.props },
 	};
 };
 
