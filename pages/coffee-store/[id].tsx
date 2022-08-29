@@ -10,7 +10,16 @@ import { GoLocation } from "react-icons/go";
 import { BsHouseDoor } from "react-icons/bs";
 import { AiOutlineLike } from "react-icons/ai";
 import useDebounce from "../../hooks/useDebounce";
-import { fetchCoffeeStores, fetchStore } from "../../lib/coffee-store";
+import { storesDataPaths, stringSeperator } from "../../lib/coffee-store";
+import { ParsedUrlQuery } from "querystring";
+import {
+	ImageFromApi,
+	ImagesFromApi,
+	SingleStore,
+	StoreFromApi,
+	StoresFromApi,
+} from "../..";
+import ConstructFetchRequest from "../../lib/ConstructFetchReques";
 
 interface Props {
 	id: number;
@@ -132,12 +141,20 @@ const CoffeeStore = ({
 };
 
 export const getStaticPaths: GetStaticPaths = async () => {
-	const data = await fetchCoffeeStores({
-		baseUrl: "https://api.foursquare.com/v3/places/search",
-		query: "coffee shop",
-		fields: "fsq_id",
-		limit: 10,
-		near: "cairo",
+	const data = await storesDataPaths.fetchData<{
+		stores: { id: string; imgId: string }[];
+	}>((storeResults: StoresFromApi, imageResults: ImagesFromApi) => {
+		{
+			const modifiedStores = storeResults.results.map((store, ind) => {
+				return {
+					id: store.fsq_id,
+					imgId: imageResults.results[ind].id,
+				};
+			});
+			return {
+				stores: modifiedStores,
+			};
+		}
 	});
 
 	if (data.notFound) {
@@ -148,9 +165,12 @@ export const getStaticPaths: GetStaticPaths = async () => {
 	}
 
 	if (data.props) {
+		// storesDataPaths.cashData(data.props.stores);
+
 		const paths = data.props.stores.map((store) => ({
-			params: { id: `${store.id}` },
+			params: { id: `${store.id}${stringSeperator}${store.imgId}` },
 		}));
+
 		return {
 			paths,
 			fallback: true,
@@ -162,29 +182,61 @@ export const getStaticPaths: GetStaticPaths = async () => {
 	};
 };
 
-export const getStaticProps: GetStaticProps<any, { id: string }> = async (
-	context
-) => {
+export const getStaticProps: GetStaticProps<
+	any,
+	{ id: string },
+	{ imgId: string }
+> = async (context) => {
 	try {
-		const data = await fetchStore({
-			baseUrl: `https://api.foursquare.com/v3/places/${context.params?.id}`,
-			fields: "fsq_id,categories,location,name,link",
-		});
+		const [id, imgId] = context.params?.id.split(stringSeperator) as [
+			string,
+			string
+		];
 
-		if (data.notFound) {
-			return {
-				notFound: true,
-			};
-		}
+		const placesApiBaseUrl = `https://api.foursquare.com/v3/places/${id}`;
+		const unSplashApiBaseUrl = `https://api.unsplash.com/photos/${imgId}`;
 
-		if (data.props) {
-			return {
-				props: data.props,
-			};
-		}
-		return {
-			notFound: true,
-		};
+		const placeRequest = new ConstructFetchRequest(
+			{
+				method: "GET",
+				headers: {
+					Accept: "application/json",
+					Authorization: process.env.API_KEY as string,
+				},
+			},
+			{
+				baseUrl: `https://api.foursquare.com/v3/places/${id}`,
+			}
+		);
+
+		const unsplashRequest = new ConstructFetchRequest(
+			{},
+			{
+				baseUrl: `https://api.unsplash.com/photos/${imgId}`,
+				client_id: process.env.UNSPLASH_KEY,
+			}
+		);
+
+		const data = await storesDataPaths.fetchData<any>(
+			(storeResults, imageResults) => {
+				return {
+					id: storeResults.fsq_id,
+					name: storeResults.name,
+					imgUrl: imageResults.urls.regular,
+					websiteUrl: storeResults.link || "",
+					address: storeResults.location.formatted_address || "",
+					neighbourhood:
+						storeResults.location.locality ||
+						storeResults.location.cross_street ||
+						"",
+					upvotes: 10,
+				};
+			},
+			placeRequest,
+			unsplashRequest
+		);
+
+		return data;
 	} catch {
 		return {
 			notFound: true,

@@ -1,4 +1,4 @@
-import type { GetStaticProps, NextPage } from "next";
+import type { GetStaticProps, GetStaticPropsResult, NextPage } from "next";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import Head from "next/head";
@@ -6,13 +6,15 @@ import Image from "next/image";
 import Banner from "../components/Banner";
 import Card from "../components/ui/Card";
 import styles from "../styles/Home.module.css";
-import { StoreFromApi } from "../index";
-import { fetchCoffeeStores } from "../lib/coffee-store";
+import { ImageFromApi, ImagesFromApi, StoreFromApi, StoresFromApi } from "../index";
+import {storesData,stringSeperator } from "../lib/coffee-store";
+
 
 interface Store {
-	id: number;
+	id: string;
 	name: string;
 	imgUrl: string;
+	imgId:string
 }
 
 interface Props {
@@ -47,14 +49,14 @@ const Home: NextPage<Props> = ({ stores }) => {
 				<h2 className={styles["grid-header"]}>toronto stores</h2>
 				<div className="grid">
 					{stores.map((store) => (
-						<Link key={store.id} href={`/coffee-store/${store.id}`}>
+						<Link key={store.id} href={`/coffee-store/${store.id}${stringSeperator}${store.imgId}`}>
 							<a>
 								<Card
 									key={store.id}
 									title={store.name}
 									href={store.imgUrl}
 									imgWidth={imgWidth}
-									id={`${store.id}`}
+									id={`${store.id}${stringSeperator}${store.imgId}`}
 								/>
 							</a>
 						</Link>
@@ -66,23 +68,33 @@ const Home: NextPage<Props> = ({ stores }) => {
 };
 
 export const getStaticProps: GetStaticProps = async () => {
-	const data = await fetchCoffeeStores({
-		baseUrl: "https://api.foursquare.com/v3/places/search",
-		query: "coffee shop",
-		fields: "fsq_id,categories,location,name",
-		limit: 10,
-		near: "cairo",
-	});
 
-	if (data.notFound) {
+	try {
+		const data = await storesData.fetchData <{
+			stores: Store[];
+		}, GetStaticPropsResult<{ stores: Store[] }>>((storeResults: StoresFromApi, imageResults: ImagesFromApi) => {
+			console.log(storeResults)
+			const modifiedStores = storeResults.results.map((store, ind) => {
+				return {
+					id: store.fsq_id,
+					name: store.name,
+					imgUrl: imageResults.results[ind].urls.small,
+					imgId:imageResults.results[ind].id
+				};
+			});
+			return {
+				stores: modifiedStores,
+			};
+		});
+
+		return data
+		
+	} catch (err) {
+		console.log(err);
 		return {
 			notFound: true,
 		};
 	}
-
-	return {
-		props: { ...data.props },
-	};
 };
 
 export default Home;
