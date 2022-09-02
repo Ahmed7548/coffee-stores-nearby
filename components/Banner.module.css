@@ -22,7 +22,7 @@
 	margin: 0;
 	line-height: 1.5;
 	font-size: calc(var(--base-unit)*12);
-	font-weight: 700;
+	font-weight: 600;
 	position: relative;
 }
 

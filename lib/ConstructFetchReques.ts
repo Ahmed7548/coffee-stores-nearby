@@ -1,9 +1,9 @@
 import { QueryOptions } from "..";
 
-class ConstructFetchRequest {
+class ConstructFetchRequest<T = QueryOptions> {
 	constructor(
 		private fetchOptions: RequestInit,
-		private queryOptions: QueryOptions
+		private queryOptions: T extends QueryOptions?T:QueryOptions
 	) {}
 
 	constructFetch(): Promise<Response> {

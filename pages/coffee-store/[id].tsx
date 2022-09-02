@@ -11,18 +11,12 @@ import { BsHouseDoor } from "react-icons/bs";
 import { AiOutlineLike } from "react-icons/ai";
 import useDebounce from "../../hooks/useDebounce";
 import { storesDataPaths, stringSeperator } from "../../lib/coffee-store";
-import { ParsedUrlQuery } from "querystring";
-import {
-	ImageFromApi,
-	ImagesFromApi,
-	SingleStore,
-	StoreFromApi,
-	StoresFromApi,
-} from "../..";
+import { ImagesFromApi, StoresFromApi } from "../..";
 import ConstructFetchRequest from "../../lib/ConstructFetchReques";
+import { toast } from "react-toastify";
 
 interface Props {
-	id: number;
+	id: string;
 	name: string;
 	imgUrl: string;
 	websiteUrl: string;
@@ -42,19 +36,26 @@ const CoffeeStore = ({
 	const prevVotes = useRef<number>(0);
 	const router = useRouter();
 
+
+	//update upvotes on the post
 	const updateResource = useCallback(
 		async (votes: number) => {
 			try {
-				const res = await fetch(`http://localhost:5000/stores/${id}`, {
-					method: "PATCH",
-					headers: {
-						"Content-Type": "application/json",
-					},
-					body: JSON.stringify({
-						upvotes: votes,
-					}),
-				});
+				console.log(votes)
+				const res = await fetch(
+					`http://localhost:3000/api/upvote/${id}`,
+					{
+						method: "PATCH",
+						headers: {
+							"Content-Type": "application/json",
+						},
+						body: JSON.stringify({
+							votes: votes,
+						}),
+					}
+				);
 				if (!res.ok) {
+					toast.error("couldn't add your upvotes")
 					setupvotes(prevVotes.current);
 				} else {
 					prevVotes.current = votes;
@@ -66,20 +67,27 @@ const CoffeeStore = ({
 		[id]
 	);
 
-	useDebounce<number>(upvotes, 500, updateResource);
+	// delay the request to update the data to avoid too many requests to the api
+	useDebounce<number>(upvotes-prevVotes.current, 300, updateResource);
 
 	useEffect(() => {
-		setLoadingVotes(true);
-		fetch(`http://localhost:5000/stores/${id}`)
+		// setLoadingVotes(true);
+		fetch(`http://localhost:3000/api/upvote/${id}`)
 			.then((res) => {
+				if (!res.ok) {
+					throw new Error("couldn't load upvotes")
+				}
 				return res.json();
 			})
-			.then((res: { upvotes: number }) => {
-				setupvotes(res.upvotes);
-				setLoadingVotes(false);
-				prevVotes.current = res.upvotes;
+			.then((res: { votes: number }) => {
+				setupvotes(res.votes);
+				// setLoadingVotes(false);
+				prevVotes.current = res.votes;
 			})
-			.catch((_) => setupvotes(prevVotes.current));
+			.catch((err) => {
+				console.log(err)
+				setupvotes(prevVotes.current)
+			});
 	}, [id]);
 
 	const upVote = () => {
@@ -93,7 +101,7 @@ const CoffeeStore = ({
 		<div className="center-container">
 			<div>
 				<Link href="/">
-					<a className="link">back to home </a>
+					<a className="link">←back to home </a>
 				</Link>
 			</div>
 			<div className={styles.container}>
@@ -193,8 +201,6 @@ export const getStaticProps: GetStaticProps<
 			string
 		];
 
-		const placesApiBaseUrl = `https://api.foursquare.com/v3/places/${id}`;
-		const unSplashApiBaseUrl = `https://api.unsplash.com/photos/${imgId}`;
 
 		const placeRequest = new ConstructFetchRequest(
 			{

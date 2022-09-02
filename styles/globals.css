@@ -13,7 +13,7 @@ body {
 	--tertiary-color: #000;
 	--primary-button-color: 28, 45, 151;
 	--text-purple: rgb(112, 73, 197);
-	--text-purple-dark: rgb(135, 34, 34);
+	--text-purple-dark: rgb(86, 31, 148);
 	--text-black: rgb(10, 16, 30);
 	--text-light: rgb(219, 226, 255);
 	--text-link: rgb(42, 11, 196);
@@ -22,6 +22,7 @@ body {
 	--grid-column-width: 350px;
 }
 
+/* rgb(72, 45, 103) */
 a {
 	color: inherit;
 	text-decoration: none;
@@ -48,6 +49,12 @@ pre {
 	font-weight: 600;
 }
 
+.head {
+	width: 100%;
+	margin: 1rem auto;
+	text-align: center;
+}
+
 button,
 .button {
 	background-color: transparent;
@@ -56,15 +63,29 @@ button,
 	outline: none;
 	font-family: inherit;
 	font-weight: 600;
+	cursor: pointer;
 }
 
 button:focus {
 	outline: none;
 }
 
+.center-container {
+	min-height: 100vh;
+	width: 100%;
+	margin: auto;
+	padding: 0.5rem;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	margin-top: 2rem;
+
+}
 
 .link{
 	color: var(--text-link);
+	font-weight: 700;
 }
 
 
@@ -94,18 +115,6 @@ button:focus {
 	color: var(--text-purple-dark);
 }
 
-.center-container {
-	min-height: 100vh;
-	width: 100vw;
-	margin: auto;
-	padding: 0.5rem;
-	display: flex;
-	flex-direction: column;
-	justify-content: flex-start;
-	align-items: center;
-	margin-top: 2rem;
-
-}
 
 .preventDefault {
 }

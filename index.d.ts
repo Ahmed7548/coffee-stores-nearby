@@ -46,14 +46,17 @@ export interface 	SingleStore{
 }
 
 
-export type QueryOptions = {
+export type QueryOptions<T= {[key: string]: string | number | undefined}> = {
 	baseUrl: string;
-	query?: string;
-	ll?: string;
-	near?: string;
-	fields?: string;
-	limit?: number;
 } & {
 	[key: string]: string | number | undefined;
-};
+} & T
 
+
+
+export interface Store {
+	id: string;
+	name: string;
+	imgUrl: string;
+	imgId:string
+}

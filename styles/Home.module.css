@@ -13,6 +13,7 @@
 
 .main header{
   height: 500px;
+  align-self: flex-start;
 }
 
 .hero-image{
@@ -23,7 +24,11 @@
 }
 
 .grid-header{
-  margin-bottom: 1.5rem;
+  margin-bottom: 3rem;
+  margin-top: 3rem;
+  letter-spacing: 2px;
+  font-weight: 600;
+  color: var(--text-purple-dark);
 }
 
 @media (min-width: 640px) {
