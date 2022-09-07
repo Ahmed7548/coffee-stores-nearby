@@ -14,6 +14,9 @@ import { storesDataPaths, stringSeperator } from "../../lib/coffee-store";
 import { ImagesFromApi, StoresFromApi } from "../..";
 import ConstructFetchRequest from "../../lib/ConstructFetchReques";
 import { toast } from "react-toastify";
+import Coffe_Store from "../../models/Coffee-store";
+import useStore from "../../hooks/swr/useVotes";
+
 
 interface Props {
 	id: string;
@@ -31,64 +34,59 @@ const CoffeeStore = ({
 	neighbourhood,
 	websiteUrl,
 }: Props) => {
+
 	const [upvotes, setupvotes] = useState<number>(0);
-	const [loadingVotes, setLoadingVotes] = useState<boolean>(true);
-	const prevVotes = useRef<number>(0);
 	const router = useRouter();
+
+	const updatePrevVotes = useCallback((value:number) => {
+		prevVotes.current=value
+	}, [])
+
+	const prevVotes= useRef(0)
+
+	const { mutate } = useStore(id, setupvotes,updatePrevVotes);
 
 
 	//update upvotes on the post
 	const updateResource = useCallback(
-		async (votes: number) => {
-			try {
-				console.log(votes)
-				const res = await fetch(
-					`http://localhost:3000/api/upvote/${id}`,
-					{
+		(votes: number) => {
+			const upvote = async () => {
+				try {
+					if (votes - prevVotes.current === 0) {
+						return
+					}
+					const res = await fetch(`http://localhost:3000/api/upvote/${id}`, {
 						method: "PATCH",
 						headers: {
 							"Content-Type": "application/json",
 						},
 						body: JSON.stringify({
-							votes: votes,
+							votes: votes-prevVotes.current,
 						}),
+					});
+
+					if (!res.ok) {
+						toast.error("couldn't add your upvotes");
+						console.log(res)
+					} else {
+						console.log("in the use debounce callback", votes);
 					}
-				);
-				if (!res.ok) {
-					toast.error("couldn't add your upvotes")
-					setupvotes(prevVotes.current);
-				} else {
-					prevVotes.current = votes;
-				}
-			} catch (err) {
-				setupvotes(prevVotes.current);
-			}
-		},
-		[id]
-	);
+				} catch (err) {
+					toast.error("couldn't add your upvotes");
+					console.log(err)
 
-	// delay the request to update the data to avoid too many requests to the api
-	useDebounce<number>(upvotes-prevVotes.current, 300, updateResource);
-
-	useEffect(() => {
-		// setLoadingVotes(true);
-		fetch(`http://localhost:3000/api/upvote/${id}`)
-			.then((res) => {
-				if (!res.ok) {
-					throw new Error("couldn't load upvotes")
 				}
-				return res.json();
-			})
-			.then((res: { votes: number }) => {
-				setupvotes(res.votes);
-				// setLoadingVotes(false);
-				prevVotes.current = res.votes;
-			})
-			.catch((err) => {
-				console.log(err)
-				setupvotes(prevVotes.current)
+			};
+
+			mutate(upvote(), {
+				rollbackOnError: true,
+				populateCache: true,
+				revalidate: true,
 			});
-	}, [id]);
+		},
+		[id,mutate]
+	);
+	useDebounce<number>(upvotes, 300, updateResource);
 
 	const upVote = () => {
 		setupvotes((prev) => prev + 1);
@@ -201,7 +199,6 @@ export const getStaticProps: GetStaticProps<
 			string
 		];
 
-
 		const placeRequest = new ConstructFetchRequest(
 			{
 				method: "GET",
@@ -242,8 +239,21 @@ export const getStaticProps: GetStaticProps<
 			unsplashRequest
 		);
 
+		await Coffe_Store.updateOne(
+			{ forSquareId: id },
+			{
+				$inc: {
+					votes: 0,
+				},
+			},
+			{
+				upsert: true,
+			}
+		);
+
 		return data;
-	} catch {
+	} catch (err) {
+		console.error("error fetching data", err);
 		return {
 			notFound: true,
 		};
