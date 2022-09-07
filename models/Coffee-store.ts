@@ -1,6 +1,6 @@
 import mongoose from "mongoose"
 
-interface Store {
+export interface Store {
   forSquareId: string;
   votes: number;
 }

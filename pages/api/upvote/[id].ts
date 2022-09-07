@@ -36,6 +36,8 @@ const upvote: NextApiHandler<
 							upsert: true,
 						}
 				);
+
+				
 				
 
 					if (update.modifiedCount === 0 && update.upsertedCount === 0) {
