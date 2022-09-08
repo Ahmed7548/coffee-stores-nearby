@@ -50,11 +50,9 @@ const CoffeeStore = ({
 		(votes: number) => {
 			const upvote = async () => {
 				try {
-					console.log(votes,prevVotes.current)
 					if (votes - prevVotes.current === 0) {
 						return;
 					}
-					console.log(prevVotes)
 					const res = await fetch(`/api/upvote/${id}`, {
 						method: "PATCH",
 						headers: {
@@ -67,9 +65,11 @@ const CoffeeStore = ({
 
 					if (!res.ok) {
 						toast.error("couldn't add your upvotes");
+						setupvotes(prevVotes.current)
 					} 
 				} catch (err) {
 					toast.error("couldn't add your upvotes");
+					setupvotes(prevVotes.current)
 					console.error(err);
 				}
 			};
