@@ -16,7 +16,7 @@ const schema = new mongoose.Schema<Store>({
     type: Number,
     default: 0
   }
-}, { autoIndex: true, autoCreate: true })
+}, { autoIndex: false, autoCreate: false })
 
 
 

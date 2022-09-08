@@ -37,10 +37,13 @@ const CoffeeStore = ({
 	const [upvotes, setupvotes] = useState<number>(0);
 	const router = useRouter();
 
-	const prevVotes = useRef(0);
+	// const prevVotes = useRef(0);
+	
+	const [prevVotes,setPrevVotes] = useState(0)
 	
 	const updatePrevVotes = useCallback((value: number) => {
-		prevVotes.current = value;
+		// prevVotes.current = value;
+		setPrevVotes(value)
 	}, []);
 
 	const { mutate } = useStore(id, setupvotes, updatePrevVotes);
@@ -50,7 +53,7 @@ const CoffeeStore = ({
 		(votes: number) => {
 			const upvote = async () => {
 				try {
-					if (votes - prevVotes.current === 0) {
+					if (votes - prevVotes === 0) {
 						return;
 					}
 					const res = await fetch(`/api/upvote/${id}`, {
@@ -59,17 +62,17 @@ const CoffeeStore = ({
 							"Content-Type": "application/json",
 						},
 						body: JSON.stringify({
-							votes: votes - prevVotes.current,
+							votes: votes -prevVotes,
 						}),
 					});
 
 					if (!res.ok) {
 						toast.error("couldn't add your upvotes");
-						setupvotes(prevVotes.current)
+						setupvotes(prevVotes)
 					} 
 				} catch (err) {
 					toast.error("couldn't add your upvotes");
-					setupvotes(prevVotes.current)
+					setupvotes(prevVotes)
 					console.error(err);
 				}
 			};
@@ -80,7 +83,7 @@ const CoffeeStore = ({
 				revalidate: true,
 			});
 		},
-		[id, mutate]
+		[id, mutate,setupvotes,prevVotes]
 	);
 	useDebounce<number>(upvotes, 300, updateResource);
 
