@@ -43,15 +43,8 @@ const Home: NextPage<Props> = ({ stores }) => {
 			const latlng = await getGeoLocation.promise();
 			const ll = `${latlng.lat},${latlng.lng}`;
 
-			const constructedFetch = new ConstructFetchRequest(
-				{},
-				{
-					baseUrl: "http://localhost:3000/api/stores",
-					limit: 20,
-					latlng: ll,
-				}
-			);
-			const response = await constructedFetch.constructFetch();
+			
+			const response = await fetch(`/api/stores?limit=${20}&latlng=${ll}`);
 			if (!response.ok) {
 				const data = await response.json();
 				toast.error(data.message);
