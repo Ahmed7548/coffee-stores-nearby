@@ -6,6 +6,7 @@ import Head from "next/head";
 import { ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import StoreProvider from "../store/StoreProvider";
+import {SWRConfig} from "swr"
 
 function MyApp({ Component, pageProps }: AppProps) {
 	return (
@@ -14,7 +15,12 @@ function MyApp({ Component, pageProps }: AppProps) {
 				<meta name="viewport" content="width=device-width, initial-scale=1" />
 			</Head>
 			<StoreProvider>
+				<SWRConfig value={{
+					refreshInterval: 2000,
+					fetcher:(url,init)=>fetch(url,init).then(res=>res.json())
+				}}>
 			<Component {...pageProps} />
+				</SWRConfig>
 			</StoreProvider>
 			<Footer />
 			<ToastContainer

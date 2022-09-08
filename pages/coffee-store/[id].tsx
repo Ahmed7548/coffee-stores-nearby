@@ -16,7 +16,7 @@ import ConstructFetchRequest from "../../lib/ConstructFetchReques";
 import { toast } from "react-toastify";
 import Coffe_Store from "../../models/Coffee-store";
 import useStore from "../../hooks/swr/useVotes";
-
+import dbConnect from "../../utils/connect-to-db";
 
 interface Props {
 	id: string;
@@ -34,47 +34,43 @@ const CoffeeStore = ({
 	neighbourhood,
 	websiteUrl,
 }: Props) => {
-
 	const [upvotes, setupvotes] = useState<number>(0);
 	const router = useRouter();
 
-	const updatePrevVotes = useCallback((value:number) => {
-		prevVotes.current=value
-	}, [])
+	const prevVotes = useRef(0);
+	
+	const updatePrevVotes = useCallback((value: number) => {
+		prevVotes.current = value;
+	}, []);
 
-	const prevVotes= useRef(0)
-
-	const { mutate } = useStore(id, setupvotes,updatePrevVotes);
-
+	const { mutate } = useStore(id, setupvotes, updatePrevVotes);
 
 	//update upvotes on the post
 	const updateResource = useCallback(
 		(votes: number) => {
 			const upvote = async () => {
 				try {
+					console.log(votes,prevVotes.current)
 					if (votes - prevVotes.current === 0) {
-						return
+						return;
 					}
-					const res = await fetch(`http://localhost:3000/api/upvote/${id}`, {
+					console.log(prevVotes)
+					const res = await fetch(`/api/upvote/${id}`, {
 						method: "PATCH",
 						headers: {
 							"Content-Type": "application/json",
 						},
 						body: JSON.stringify({
-							votes: votes-prevVotes.current,
+							votes: votes - prevVotes.current,
 						}),
 					});
 
 					if (!res.ok) {
 						toast.error("couldn't add your upvotes");
-						console.log(res)
-					} else {
-						console.log("in the use debounce callback", votes);
-					}
+					} 
 				} catch (err) {
 					toast.error("couldn't add your upvotes");
-					console.log(err)
-
+					console.error(err);
 				}
 			};
 
@@ -84,7 +80,7 @@ const CoffeeStore = ({
 				revalidate: true,
 			});
 		},
-		[id,mutate]
+		[id, mutate]
 	);
 	useDebounce<number>(upvotes, 300, updateResource);
 
@@ -109,7 +105,7 @@ const CoffeeStore = ({
 						<Image alt="" src={imgUrl} width={650} height={360} />
 					</div>
 				</div>
-				<div className={`${styles.right} glass`}>
+				<div className={`${styles.right} glass glass-animate`}>
 					<h3>{name}</h3>
 					<div className={styles.address}>
 						<address>
@@ -239,7 +235,9 @@ export const getStaticProps: GetStaticProps<
 			unsplashRequest
 		);
 
-		await Coffe_Store.updateOne(
+		await dbConnect()
+
+		 await Coffe_Store.updateOne(
 			{ forSquareId: id },
 			{
 				$inc: {
@@ -250,6 +248,7 @@ export const getStaticProps: GetStaticProps<
 				upsert: true,
 			}
 		);
+
 
 		return data;
 	} catch (err) {

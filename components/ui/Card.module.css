@@ -1,5 +1,5 @@
 
-.cart {
+.card {
   height: fit-content;
   width: fit-content;
   padding: 1rem;
@@ -9,13 +9,13 @@
   color:var(--text-purple-dark)
 }
 
-.cart:hover{
+.card:hover{
   transform: scale(1.03);
   background: rgba( 255, 255, 255, 0.8 );
 }
 
 
-.cart h4{
+.card h4{
  padding-bottom: 1rem;
  padding-top: 0.5rem;
 }

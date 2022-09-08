@@ -1,11 +1,12 @@
 import styles from "../../styles/Footer.module.css"
+import {AiOutlineCopyright} from "react-icons/ai" 
 
 
 
 const Footer = () => {
   return (
     <footer className={styles.footer }>
-      some data
+      <p><small><AiOutlineCopyright/></small> Ahmed Mamdouh dev</p>
     </footer>
   )
 }

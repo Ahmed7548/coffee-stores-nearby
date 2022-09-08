@@ -23,7 +23,6 @@ class FetchCoffeeStoreData<Prop extends { id: string } = any> {
 			const results: any[] = [];
 			for (let response of responses) {
 				if (!response.ok) {
-					console.log("problem heeere", response);
 					return Promise.reject(`response in not ok  with status code of ${response.status}`);
 				}
 				results.push(await response.json());
@@ -33,7 +32,7 @@ class FetchCoffeeStoreData<Prop extends { id: string } = any> {
 				props: transformData(...results),
 			};
 		} catch (err) {
-			console.log(err);
+			console.error(err);
 			return Promise.reject(err);
 		}
 	}
@@ -41,7 +40,6 @@ class FetchCoffeeStoreData<Prop extends { id: string } = any> {
 	private fetchInitialData(
 		...fetchinstances: ConstructFetchRequest[]
 	): Promise<Response[]> {
-		console.log(fetchinstances, "from fetch initial data");
 		return Promise.all(
 			fetchinstances.map((fetchinstance) => fetchinstance.constructFetch())
 		);

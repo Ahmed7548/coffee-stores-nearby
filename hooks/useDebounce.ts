@@ -4,7 +4,6 @@ const useDebounce = <T>(value: T, debounceTime: number, cb?: (value:T)=>void) =>
 	const [returnValue, setReturnValue] = useState<T>(value);
 
 	useEffect(() => {
-		console.log(value)
 		if (!value) {
 			return
 		}

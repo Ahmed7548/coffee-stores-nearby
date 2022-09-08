@@ -110,14 +110,17 @@ button:focus {
 }
 
 .glass:hover{
-  transform: scale(1.03);
-  background: rgba(255, 254, 254, 0.576);
 	color: var(--text-purple-dark);
 }
 
 
-.preventDefault {
+.glass-animate:hover{
+  transform: scale(1.01);
+  background: rgba(255, 254, 254, 0.576);
 }
+
+
+
 .text-white {
 	color: var(--text-light);
 }

@@ -61,7 +61,6 @@ export const storesDataPaths = new FetchCoffeeStoreData(
 
 
 export const transformStoresDataCB=(storeResults: StoresFromApi, imageResults: ImagesFromApi)=> {
-	console.log(storeResults)
 	const modifiedStores = storeResults.results.map((store, ind) => {
 		return {
 			id: store.fsq_id,

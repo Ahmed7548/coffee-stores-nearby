@@ -170,7 +170,7 @@ export const getStaticProps: GetStaticProps = async () => {
 
 		return data;
 	} catch (err) {
-		console.log(err);
+		console.error(err);
 		return {
 			notFound: true,
 		};
